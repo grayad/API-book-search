@@ -51,34 +51,34 @@ const resolvers = {
       const token = signToken(user);
       return { token, user };
     },
-  },
-  saveBook: async (parent, args, context) => {
-    // check for token
-    if (context.user) {
-      let updatedUser = await User.findByIdAndUpdate(
-        { _id: context.user._id },
-        { $push: { savedBooks: args.input } },
-        { new: true }
-      );
+    saveBook: async (parent, args, context) => {
+      // check for token
+      if (context.user) {
+        let updatedUser = await User.findByIdAndUpdate(
+          { _id: context.user._id },
+          { $push: { savedBooks: args.input } },
+          { new: true }
+        );
 
-      return updatedUser;
-    }
-    // if no token, user needs to login
-    throw new AuthenticationError("Please log in or create an account!");
-  },
-  removeBook: async () => {
-    // check for token
-    if (context.user) {
-      let updatedUser = await User.findByIdAndUpdate(
-        { _id: context.user._id },
-        { $pull: { savedBooks: { bookId: args.bookId } } },
-        { new: true }
-      );
+        return updatedUser;
+      }
+      // if no token, user needs to login
+      throw new AuthenticationError("Please log in or create an account!");
+    },
+    removeBook: async () => {
+      // check for token
+      if (context.user) {
+        let updatedUser = await User.findByIdAndUpdate(
+          { _id: context.user._id },
+          { $pull: { savedBooks: { bookId: args.bookId } } },
+          { new: true }
+        );
 
-      return updatedUser;
-    }
-    // if no token, user needs to login
-    throw new AuthenticationError("Please log in or create an account!");
+        return updatedUser;
+      }
+      // if no token, user needs to login
+      throw new AuthenticationError("Please log in or create an account!");
+    },
   },
 };
 
