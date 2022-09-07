@@ -5,6 +5,7 @@ import {
   InMemoryCache,
   createHttpLink,
 } from "@apollo/client";
+import { setContext } from "@apollo/client/link/context";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import SearchBooks from "./pages/SearchBooks";
@@ -16,9 +17,23 @@ const httpLink = createHttpLink({
   uri: "/graphql",
 });
 
-// instantiate the Apollo Client instance and new cache object, and create the connection to the API endpoint
+//  middleware function that will retrieve the token for us and combine it with the existing httpLink
+const authLink = setContext((_, { headers }) => {
+  // retrieve token from localStorage
+  const token = localStorage.getItem("id_token");
+
+  // set the HTTP request headers of every request to include the token
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : "",
+    },
+  };
+});
+
+// instantiate the Apollo Client instance and new cache object, and create the connection to the API endpoint (combine authLink and httpLink)
 const client = new ApolloClient({
-  link: httpLink,
+  link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
 });
 

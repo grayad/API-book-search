@@ -32,12 +32,14 @@ const LoginForm = () => {
     }
 
     try {
-      const {data} = await loginUser({
-        variables: {...userFormData}
+      const { data } = await loginUser({
+        variables: { ...userFormData },
       });
 
       console.log(data);
-      Auth.login(data.LOGIN_USER.token);
+      console.log(data.login.token);
+      // save token to localStorage
+      Auth.login(data.login.token);
     } catch (e) {
       console.error(e);
       setShowAlert(true);
