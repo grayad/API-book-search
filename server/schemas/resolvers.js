@@ -2,7 +2,6 @@ const { User, Book } = require("../models");
 
 const { AuthenticationError } = require("apollo-server-express");
 const { signToken } = require("../utils/auth");
-const { convertNodeHttpToRequest } = require("apollo-server-core");
 
 const resolvers = {
   Query: {
@@ -16,16 +15,6 @@ const resolvers = {
       }
 
       throw new AuthenticationError("Not logged in");
-    },
-    // get all users
-    users: async () => {
-      return User.find().select("-__v -password").populate("savedBooks");
-    },
-    // get a user by username
-    user: async (parent, { username }) => {
-      return User.findOne({ username })
-        .select("-__v -password")
-        .populate("savedBooks");
     },
   },
   Mutation: {
