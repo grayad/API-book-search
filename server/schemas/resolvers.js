@@ -7,8 +7,9 @@ const resolvers = {
   Query: {
     me: async (parent, args, context) => {
       if (context.user) {
-        const userData = await User.findOne({ _id: context.user._id })
-          .select("-__v -password")
+        const userData = await User.findOne({ _id: context.user._id }).select(
+          "-__v -password"
+        );
 
         console.log(userData);
         return userData;
@@ -44,9 +45,6 @@ const resolvers = {
       console.log(">>>>", args);
       // check for token
       if (context.user) {
-        console.log(context.user);
-        console.log(context.user._id);
-        console.log(args);
         let updatedUser = await User.findByIdAndUpdate(
           { _id: context.user._id },
           { $push: { savedBooks: args.input } },
@@ -58,7 +56,7 @@ const resolvers = {
       // if no token, user needs to login
       throw new AuthenticationError("Please log in or create an account!");
     },
-    removeBook: async () => {
+    removeBook: async (parent, args, context) => {
       // check for token
       if (context.user) {
         let updatedUser = await User.findByIdAndUpdate(
