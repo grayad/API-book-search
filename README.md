@@ -1,7 +1,7 @@
 # API-book-search
 
 ## Project Description
-A fully functioning Google Books API search engine built refactored from a RESTful API to be a GraphQL API built with Apollo Server.
+A fully functioning Google Books API search engine refactored from a RESTful API to be a GraphQL API built with Apollo Server.
 
 ## Table of Contents
   - [Installation](#installation)
