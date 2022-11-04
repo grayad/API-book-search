@@ -3,6 +3,9 @@
 ## Project Description
 A fully functioning Google Books API search engine refactored from a RESTful API to be a GraphQL API built with Apollo Server.
 
+## Deployed Application
+https://search-book-api.herokuapp.com/
+
 ## Table of Contents
   - [Installation](#installation)
   - [Technologies](#technologies)
